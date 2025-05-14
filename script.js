@@ -3,34 +3,23 @@ getSumBtn.append("Get Total Price");
 document.body.appendChild(getSumBtn);
 
 const getSum = () => {
-//Add your code here
-	 const priceCells = document.querySelectorAll('.prices');
-
-  // Calculate the total price
+  const priceCells = document.querySelectorAll('.price');
   let total = 0;
+
   priceCells.forEach(cell => {
-    total += parseFloat(cell.textContent);
+    const value = parseFloat(cell.textContent.trim());
+    total += isNaN(value) ? 0 : value;
   });
 
-  // Create a new row to display total
-  const totalRow = document.createElement("tr");
-  const totalCell = document.createElement("td");
+  // Check if ans already exists
+  let ans = document.getElementById('ans');
+  if (!ans) {
+    ans = document.createElement('div');
+    ans.id = 'ans';
+    document.body.appendChild(ans);
+  }
 
-  // Span across 2 columns and set content
-  totalCell.setAttribute("colspan", "2");
-  totalCell.style.fontWeight = "bold";
-  totalCell.textContent = `Total Price: ₹${total}`;
-
-  totalRow.appendChild(totalCell);
-
-  // Append total row to the table
-  const table = document.querySelector("table");
-  table.appendChild(totalRow);
-
-  // Disable the button to avoid duplicate total rows
-  getSumBtn.disabled = true;
-
-  
+  ans.textContent = total;
 };
 
 getSumBtn.addEventListener("click", getSum);
